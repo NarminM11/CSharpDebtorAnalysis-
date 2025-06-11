@@ -1,15 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 
 
-class Program
-{
-    class Debtor
-    {
-        public Debtor(string fullname, DateTime birthDay, string phone, string email, string address, int debt)
-        {
+class Program {
+    class Debtor {
+        public Debtor(string fullname, DateTime birthDay, string phone, string email, string address, int debt) {
             this.FullName = fullname;
             this.BirthDay = birthDay;
             this.Phone = phone;
@@ -24,8 +21,7 @@ class Program
         public string Email { get; set; }
         public string Address { get; set; }
         public int Debt { get; set; }
-        public override string ToString()
-        {
+        public override string ToString() {
             return $"{this.FullName} {this.BirthDay.ToShortDateString()} {this.Phone} {this.Email} {this.Address} {this.Debt}";
         }
     }
@@ -81,10 +77,9 @@ class Program
 
 
 
-    static void Main()
-    {
+    static void Main() {        
 
-        //task1
+            //task1
         /*var filteredDebtors = debtors
             .Where(d => d.Email.EndsWith("rhyta.com") || d.Email.EndsWith("dayrep.com"));
 
@@ -93,70 +88,192 @@ class Program
             Console.WriteLine(debtor);
         }
         */
-
+        
         //task2
         /*
-       var filteredDebtors = debtors
+  var filteredDebtors = debtors
             .Where(d =>(DateTime.Today.Year- d.BirthDay.Year > 25 || DateTime.Today.Year- d.BirthDay.Year < 30));
 
         foreach (var debtor in filteredDebtors)
         {
             Console.WriteLine(debtor);
         }
-       */
+*/
 
-        //task3
-        /*var filteredDebtors = debtors
-            .Where(d => d.Debt < 5000);
+//task3
+/*var filteredDebtors = debtors
+    .Where(d => d.Debt < 5000);
 
-        foreach (var debtor in filteredDebtors)
-        {
-            Console.WriteLine(debtor);
-        }
-        */
+foreach (var debtor in filteredDebtors)
+{
+    Console.WriteLine(debtor);
+}
+*/
 
-        //task4
-        /*var filteredDebtors = debtors
-            .Where(d => d.FullName.Length > 18 && d.Phone.Count(ch => ch == '7') >= 2);
+//task4
+/*var filteredDebtors = debtors
+    .Where(d => d.FullName.Length > 18 && d.Phone.Count(ch => ch == '7') >= 2);
 
-        foreach (var debtor in filteredDebtors)
-        {
-            Console.WriteLine(debtor);
-        }
-        */
+foreach (var debtor in filteredDebtors)
+{
+    Console.WriteLine(debtor);
+}
+*/
 
-        //task5
-        /*var filteredDebtors = debtors
-            .Where(d => d.BirthDay.Month < 3 ||  d.BirthDay.Month == 12);
+//task5
+/*var filteredDebtors = debtors
+    .Where(d => d.BirthDay.Month < 3 ||  d.BirthDay.Month == 12);
 
-        foreach (var debtor in filteredDebtors)
-        {
-            Console.WriteLine(debtor);
-        }
+foreach (var debtor in filteredDebtors)
+{
+    Console.WriteLine(debtor);
+}
 
-        */
+*/
 
-        //task6
-        /*int totalDebt = 0;
-        int counter=0;
+//task8
+/*
+double averageDebt = debtors.Average(d => d.Debt);
 
-        foreach (var debtor in debtors)
-        {
-           totalDebt+=debtor.Debt;
-           counter++;
-        }
+var sortedDebtors = debtors
+    .Where(d => d.Debt > averageDebt)
+    .OrderBy(d => d.FirstName.Split(' ').Last())
+    .ThenByDescending(d => d.Debt)      
 
-        int averageDebt= totalDebt /counter;
-        var filteredDebtors = debtors
-            .Where(d => d.Debt>averageDebt);
-        foreach (var debtor in filteredDebtors)
-        {
-            Console.WriteLine(debtor);
-        }
-        */
+foreach (var debtor in sortedDebtors)
+{
+    Console.WriteLine($"{debtor.Name} - {debtor.Debt}");
+}
+*/
 
-        //task7
-       
+
+//task9
+/*var filteredResult = debtors
+    .Where(d => !d.Phone.Contains('8'));
+
+foreach (var debtor in filteredResult)
+{
+    string surname = debtor.FullName.Split(' ').Last();
+    int age = DateTime.Today.Year - debtor.BirthDay.Year;
+    int debt = debtor.Debt;
+
+    Console.WriteLine($"{surname}, Age: {age}, Debt: {debt}");
+}
+*/
+
+//task11
+/*var filteredDebtors = debtors.Where(d =>
+{
+    var firstName = d.FullName.Split(' ').First().ToLower();
+    var lastName = d.FullName.Split(' ').Last().ToLower();
+
+     var letterCounter = firstName.Intersect(lastName).Count();
+
+    return letterCounter >= 3;
+})
+.OrderBy(d => d.FullName);
+
+foreach (var debtor in filteredDebtors)
+{
+    Console.WriteLine(debtor.FullName);
+}
+*/
+
+//task13
+
+var mostCommonBirthYear = debtors
+    .GroupBy(d => d.BirthDay.Year)
+    .OrderByDescending(d => d.Count())
+    .First()
+    .Key;
+
+Console.WriteLine($"The year of birth with the most debt: {mostCommonBirthYear}");
+
+
+//task14
+/*var filteredResult = debtors
+ .OrderBy(d => d.Debt)
+ .Take(5);
+ 
+foreach (var debtor in filteredResult)
+{
+    Console.WriteLine(debtor);
+}
+*/
+
+//task15
+/*int totalDebt = debtors.Sum(d => d.Debt);
+Console.WriteLine(totalDebt);
+*/
+
+//task16
+/*var filteredResult = debtors
+ .Where(d => d.BirthDay.Year<=1945);
+
+foreach (var debtor in filteredResult)
+{
+    Console.WriteLine(debtor);
+}
+*/
+
+//task18
+/*var filteredDebtors = debtors.Where(d =>
+    d.Phone.Where(char.IsDigit).Distinct().Count() == d.Phone.Count(char.IsDigit));
+
+int totalDebt = filteredDebtors.Sum(d => d.Debt);
+
+foreach (var debtor in filteredDebtors)
+{
+    Console.WriteLine(debtor.FullName);
+}
+
+Console.WriteLine($"\nTotal debt of that user: {totalDebt}");
+*/
+
+//task19
+/*DateTime today = DateTime.Today;
+
+var filteredDebtors = debtors.Where(d =>
+{
+    DateTime birthdayThisYear = new DateTime(today.Year, d.BirthDay.Month, d.BirthDay.Day);
+
+    if (birthdayThisYear < today)
+        birthdayThisYear = birthdayThisYear.AddYears(1);
+
+    int remainMonthsToBirthday = ((birthdayThisYear.Year - today.Year) * 12) + birthdayThisYear.Month - today.Month;
+
+    remainMonthsToBirthday = Math.Max(remainMonthsToBirthday, 1);
+
+    int maxPaymentAmount = remainMonthsToBirthday * 500;
+
+    return d.Debt <= maxPaymentAmount;
+});
+
+foreach (var debtor in filteredDebtors)
+{
+    Console.WriteLine($"{debtor.FullName} - Debt: {debtor.Debt} AZN - BirthDay: {debtor.BirthDay.ToShortDateString()}");
+}
+*/
+
+//task20
+
+var filteredDebtors = debtors.Where(d =>
+{
+    var fullName = d.FullName.ToLower().Replace(" ", "");
+
+    foreach (var n in "smile")
+    {
+        if (fullName.Count(ch => ch == n) < "smile".Count(ch => ch == n))
+            return false;
+    }
+    return true;
+});
+
+foreach (var debtor in filteredDebtors)
+{
+    Console.WriteLine(debtor.FullName);
+}
+
 
 
 
